@@ -1,0 +1,67 @@
+{
+    "Salesforce": {
+        "name": "Salesforce",
+        "kill_points": [
+            "Our pricing is 60% lower than Salesforce for equivalent features",
+            "Implementation takes 2 weeks vs 3-6 months for Salesforce",
+            "No expensive consultants needed - intuitive self-service setup",
+            "Better mobile experience with offline support"
+        ],
+        "weaknesses": [
+            "They have larger market presence",
+            "More third-party integrations available"
+        ],
+        "counter_objections": {
+            "ecosystem": "While Salesforce has more integrations, our Zapier connector provides access to 1000+ apps",
+            "enterprise_ready": "We serve Fortune 500 companies including [Customer X]"
+        }
+    },
+    "HubSpot": {
+        "name": "HubSpot",
+        "kill_points": [
+            "Our AI-powered lead scoring is more accurate (92% vs 78%)",
+            "Better enterprise security features (SOC 2, on-prem option)",
+            "More flexible API with higher rate limits"
+        ],
+        "weaknesses": [
+            "HubSpot has stronger marketing automation",
+            "Better free tier for small businesses"
+        ],
+        "counter_objections": {
+            "free_tier": "Our Starter plan at $29/user provides better value than HubSpot's paid Sales Hub",
+            "marketing": "We integrate natively with HubSpot Marketing if they want best of both"
+        }
+    },
+    "Pipedrive": {
+        "name": "Pipedrive",
+        "kill_points": [
+            "More advanced reporting and analytics",
+            "Better suited for larger sales teams (50+ reps)",
+            "Enterprise-grade security and compliance"
+        ],
+        "weaknesses": [
+            "Pipedrive is simpler and easier to learn",
+            "Lower starting price point"
+        ],
+        "counter_objections": {
+            "complexity": "We offer free onboarding and training for all plans",
+            "price": "TCO is lower when you factor in productivity gains"
+        }
+    },
+    "Zoho": {
+        "name": "Zoho CRM",
+        "kill_points": [
+            "Superior AI capabilities with GPT-4 integration",
+            "Better US-based support (Zoho is India-based)",
+            "Faster performance and modern UI"
+        ],
+        "weaknesses": [
+            "Zoho offers full business suite (email, docs, etc.)",
+            "Very competitive pricing"
+        ],
+        "counter_objections": {
+            "suite": "We integrate with Google Workspace and Microsoft 365 for full productivity",
+            "price": "Our Professional plan includes features that are add-ons with Zoho"
+        }
+    }
+}

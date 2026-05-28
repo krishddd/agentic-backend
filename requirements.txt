@@ -1,0 +1,86 @@
+# =============================================================================
+# Multi-Agent Orchestrator v6.0.2 — Root Requirements
+# =============================================================================
+# Core pipeline dependencies. Module-specific deps in Crewai_module/ and Marketing/.
+
+# --- LLM & AI Framework ---
+langchain>=0.3.0
+langchain-core>=1.0.0
+langchain-community>=0.3.0
+langgraph>=1.0.0
+
+# --- Ollama ---
+requests>=2.31.0
+
+# --- Web Framework ---
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# --- Data ---
+python-dotenv>=1.0.0
+
+# --- Web Scraping (ContentEnricher) ---
+scrapling>=0.2.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# --- Search Connectors (MCP) ---
+tavily-python>=0.3.0
+duckduckgo-search>=4.0.0
+yfinance>=0.2.30
+
+# --- Async ---
+nest-asyncio>=1.5.0
+httpx>=0.25.0
+
+# --- RAG & Embeddings ---
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+
+# --- Utilities ---
+rich>=13.0.0
+tenacity>=8.2.0
+
+# --- ABM Simulation (MiroFish Grandmaster) ---
+mesa>=3.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+loguru>=0.7.0
+scikit-learn>=1.3.0              # k-means for ABM coalition detection
+networkx>=3.1                    # GraphRAG, graph_visualizer, knowledge graph
+
+# --- Google Services (Sheets + Gmail) ---
+google-api-python-client>=2.100.0
+google-auth-httplib2>=0.2.0
+google-auth-oauthlib>=1.0.0
+
+# =============================================================================
+# Phase 2-7: Domain-Specific Connectors (optional — uncomment as needed)
+# =============================================================================
+
+# --- Phase 2: Research ---
+exa-py>=1.0.0                  # Exa AI neural search
+
+# --- Phase 3: Desktop / Document ---
+# pytesseract>=0.3.10           # OCR via Tesseract
+# Pillow>=10.0.0                # Image handling for OCR
+# unstructured>=0.10.0          # Universal document parser
+pdfplumber>=0.10.0              # PDF text/table extraction
+openpyxl>=3.1.0                 # Excel report reading
+
+# --- Phase 4: Legal ---
+# lexnlp>=2.1.0                 # Legal NLP entity extraction
+# spacy>=3.7.0                  # NER (run: python -m spacy download en_core_web_sm)
+# PyMuPDF>=1.23.0               # PDF parsing with coordinates
+
+# --- Phase 5: Cybersecurity ---
+# shodan>=1.30.0                # Shodan internet scanner
+# mitreattack-python>=1.6.0     # MITRE ATT&CK knowledge base
+# pymisp>=2.4.0                 # MISP threat intelligence
+
+# --- Phase 6: Medical ---
+biopython>=1.83                 # NCBI Entrez (PubMed, GenBank)
+
+# --- Phase 7: Supply Chain ---
+# wbgapi>=1.0.0                 # World Bank data SDK

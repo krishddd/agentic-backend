@@ -1,0 +1,217 @@
+agents:
+  research_analyst:
+    role: "Senior Research Analyst"
+    goal: "Conduct comprehensive market research and competitive analysis for {stock_symbol}"
+    backstory: |
+      You are a seasoned research analyst with 15+ years of experience in equity research.
+      Your expertise lies in gathering and synthesizing market intelligence, tracking industry trends,
+      analyzing competitor positioning, and identifying key market drivers. You have a keen eye for
+      detail and excel at connecting disparate pieces of information to form a coherent picture of
+      the market landscape. Your research forms the foundation for investment decisions.
+    
+  financial_analyst:
+    role: "Expert Financial Analyst"
+    goal: "Analyze financial statements, SEC filings, and key metrics for {stock_symbol} to assess financial health"
+    backstory: |
+      You are an expert financial analyst with deep expertise in financial statement analysis,
+      ratio calculations, and SEC filing interpretation. With a CFA charter and 12+ years of experience,
+      you specialize in dissecting 10-Q and 10-K forms to uncover insights about revenue trends,
+      profitability, cash flows, and financial risks. You use advanced RAG techniques to extract
+      relevant information from lengthy regulatory filings and can quickly identify red flags or
+      opportunities in financial data.
+    
+  investment_advisor:
+    role: "Senior Investment Advisor"
+    goal: "Synthesize research and analysis to provide clear, actionable investment recommendations for {stock_symbol}"
+    backstory: |
+      You are a senior investment advisor with 20+ years of experience managing portfolios for
+      high-net-worth individuals and institutional clients. Your strength is synthesizing complex
+      research and financial analysis into clear, actionable investment recommendations. You consider
+      multiple perspectives, weigh risks against opportunities, and provide balanced recommendations
+      that account for both fundamental analysis and market dynamics. Your reports are known for
+      their clarity, depth, and practical value.
+
+tasks:
+  research:
+    description: |
+      Conduct comprehensive market research on {stock_symbol}:
+      
+      1. Market Sentiment Analysis:
+         - Analyze recent news articles and social media sentiment
+         - Identify positive and negative sentiment drivers
+         - Gauge overall market perception
+      
+      2. Regulatory Changes:
+         - Monitor recent regulatory developments affecting the company
+         - Track policy changes in relevant jurisdictions
+         - Identify compliance risks or opportunities
+      
+      3. Insider Trading Activity:
+         - Research recent insider buying or selling activity
+         - Analyze patterns in executive stock transactions
+         - Interpret significance of insider moves
+      
+      4. Upcoming Events:
+         - Identify upcoming earnings calls, investor days, product launches
+         - Track important dates (ex-dividend, analyst meetings, etc.)
+         - Note any scheduled announcements
+      
+      5. Competitive Landscape:
+         - Compare {stock_symbol} with key competitors
+         - Analyze market share trends
+         - Identify competitive advantages or threats
+      
+      Provide a comprehensive research summary with sources and key findings.
+    
+    expected_output: |
+      A detailed research report including:
+      - Market sentiment summary (bullish/bearish/neutral) with supporting evidence
+      - List of recent regulatory changes and their impact
+      - Insider trading activity analysis with transaction details
+      - Calendar of upcoming events with significance ratings
+      - Competitive analysis comparing {stock_symbol} with 3-5 key competitors
+      - Key research findings and implications
+  
+  financial_analysis:
+    description: |
+      Perform deep financial analysis on {stock_symbol}:
+      
+      1. Revenue Analysis:
+         - Analyze revenue trends over the past 4 quarters
+         - Break down revenue by segment and geography if available
+         - Calculate revenue growth rates (YoY, QoQ)
+         - Identify revenue drivers and risks
+      
+      2. Profitability Metrics:
+         - Calculate gross margin, operating margin, net margin
+         - Analyze profitability trends
+         - Compare margins with industry averages
+         - Identify margin expansion or compression drivers
+      
+      3. Financial Ratios:
+         - Calculate key liquidity ratios (current, quick)
+         - Compute leverage ratios (debt-to-equity, interest coverage)
+         - Calculate efficiency ratios (ROE, ROA, ROIC)
+      
+      4. Cash Flow Analysis:
+         - Analyze operating, investing, and financing cash flows
+         - Calculate free cash flow
+         - Assess cash generation quality
+      
+      5. Balance Sheet Health:
+         - Analyze asset composition and quality
+         - Evaluate debt levels and maturity profile
+         - Assess liquidity position
+      
+      Provide quantitative analysis with specific numbers and trends.
+    
+    expected_output: |
+      A comprehensive financial analysis report containing:
+      - Revenue breakdown by segment/geography with growth rates
+      - Profitability metrics table with trend analysis
+      - Complete financial ratios scorecard
+      - Cash flow statement analysis with free cash flow calculation
+      - Balance sheet health assessment
+      - Key financial strengths and weaknesses
+      - Comparison with industry benchmarks where available
+  
+  filing_analysis:
+    description: |
+      Analyze SEC 10-Q filings for {stock_symbol} using RAG retrieval:
+      
+      1. Download and Process:
+         - Retrieve the most recent 10-Q filing
+         - Extract and chunk key sections
+         - Embed documents for semantic search
+      
+      2. Risk Factors Analysis:
+         - Use RAG to extract risk factors mentioned in the filing
+         - Identify new or escalating risks compared to previous filings
+         - Categorize risks (operational, financial, regulatory, market)
+      
+      3. Management Discussion & Analysis (MD&A):
+         - Extract key management insights about business performance
+         - Identify forward-looking statements
+         - Note management's commentary on trends and outlook
+      
+      4. Business Segment Performance:
+         - Extract performance metrics for each business segment
+         - Identify segment-specific trends and challenges
+         - Note any restructuring or strategic changes
+      
+      5. Contingent Liabilities:
+         - Identify pending litigation or regulatory investigations
+         - Extract details about contingent liabilities
+         - Assess potential financial impact
+      
+      Use RAG tools to retrieve relevant information efficiently.
+    
+    expected_output: |
+      A detailed 10-Q analysis report including:
+      - Summary of key risk factors with categorization
+      - Management's discussion highlights with direct quotes
+      - Segment performance breakdown with metrics
+      - List of contingent liabilities and their potential impact
+      - Notable changes from previous filings
+      - Key insights extracted via RAG retrieval
+      - Flags for any concerning disclosures
+  
+  report:
+    description: |
+      Create a comprehensive investment report for {stock_symbol} by synthesizing all research and analysis:
+      
+      1. Executive Summary:
+         - Investment thesis in 2-3 paragraphs
+         - Clear recommendation (Strong Buy, Buy, Hold, Sell, Strong Sell)
+         - Target price and timeframe
+      
+      2. Financial Health:
+         - Synthesize financial analysis findings
+         - Highlight revenue trends, profitability, and cash flow strength
+         - Include key financial metrics in an easy-to-read format
+      
+      3. Market Sentiment:
+         - Summarize market sentiment analysis
+         - Include key news and sentiment drivers
+         - Note analyst consensus if available
+      
+      4. Regulatory & Risk Analysis:
+         - Highlight regulatory changes and their impact
+         - Summarize key risks from 10-Q filing
+         - Assess overall risk level (Low, Medium, High)
+      
+      5. Insider Trading:
+         - Report insider activity and interpretation
+         - Note any significant patterns
+      
+      6. Upcoming Events:
+         - List key upcoming events and their significance
+         - Include earnings date, ex-dividend date, etc.
+      
+      7. Competitive Position:
+         - Summarize competitive landscape
+         - Highlight competitive advantages or disadvantages
+      
+      8. Investment Recommendation:
+         - Clear buy/hold/sell recommendation with rationale
+         - Suggested entry price range
+         - Price target with 12-month horizon
+         - Key catalysts to watch
+         - Risk factors to monitor
+      
+      The report should be professional, well-structured, and actionable.
+    
+    expected_output: |
+      A comprehensive investment report (1500-2500 words) with the following structure:
+      
+      # Investment Report: {stock_symbol}
+      ## Executive Summary
+      ## Financial Health
+      ## Market Sentiment Analysis
+      ## Regulatory Changes & Risk Factors
+      ## Insider Trading Activity
+      ## Upcoming Events Calendar
+      ## Competitive Positioning
+      ## Investment Recommendation
+      
+      The report should be clear, data-driven, and include specific numbers, dates, and actionable insights.

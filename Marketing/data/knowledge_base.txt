@@ -1,0 +1,69 @@
+# Sales Operations AI - Product Knowledge Base
+# This file is used by the RAG engine to answer technical questions
+
+## PRODUCT OVERVIEW
+Our product is SalesForce Pro - an AI-powered CRM platform designed for enterprise sales teams.
+
+## PRICING TIERS
+
+### Starter Plan - $29/user/month
+- Up to 10 users
+- Basic CRM features
+- Email integration
+- Standard support
+
+### Professional Plan - $79/user/month
+- Unlimited users
+- Advanced analytics
+- API access (10,000 calls/month)
+- Priority support
+- Custom dashboards
+
+### Enterprise Plan - $149/user/month
+- Everything in Professional
+- Unlimited API calls
+- SSO/SAML authentication
+- Dedicated account manager
+- 99.9% SLA
+- On-premise deployment option
+
+## TECHNICAL SPECIFICATIONS
+
+### API Limits
+- Starter: No API access
+- Professional: 10,000 API calls/month
+- Enterprise: Unlimited API calls
+
+### SSO/Authentication
+- Supports SAML 2.0, OAuth 2.0, OpenID Connect
+- Available on Enterprise plan only
+- Integration with Okta, Azure AD, OneLogin
+
+### Data Security
+- SOC 2 Type II certified
+- GDPR compliant
+- End-to-end encryption (AES-256)
+- Data residency options (US, EU, APAC)
+
+### Integrations
+- Salesforce, HubSpot, Pipedrive (native)
+- Slack, Microsoft Teams
+- Zapier (1000+ apps)
+- Custom webhooks
+
+## FREQUENTLY ASKED QUESTIONS
+
+Q: Do you offer a free trial?
+A: Yes, 14-day free trial with full Professional features.
+
+Q: What's the contract length?
+A: Monthly or annual. Annual saves 20%.
+
+Q: Can we migrate from Salesforce?
+A: Yes, we offer free migration assistance for Enterprise customers.
+
+Q: Do you support mobile?
+A: Yes, iOS and Android apps available.
+
+Q: What's your uptime guarantee?
+A: 99.9% for Enterprise, 99.5% for Professional.

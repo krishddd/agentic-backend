@@ -1,0 +1,45 @@
+# =============================================================================
+# n8n Workflow Automation — Docker Compose
+# =============================================================================
+# Deploy: docker-compose -f docker-compose.n8n.yml up -d
+# Access: http://localhost:5678
+#
+# This runs n8n self-hosted for workflow automation.
+# The Multi-Agent Orchestrator triggers n8n via webhook after research completes.
+#
+# Environment Variables:
+#   N8N_BASE_URL=http://localhost:5678  (default)
+#   N8N_RESEARCH_WEBHOOK=research-complete  (default webhook path)
+# =============================================================================
+
+version: "3.8"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n-orchestrator
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=changeme
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=Asia/Kolkata
+      - TZ=Asia/Kolkata
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - agent-network
+
+networks:
+  agent-network:
+    driver: bridge
+
+volumes:
+  n8n_data:
+    driver: local

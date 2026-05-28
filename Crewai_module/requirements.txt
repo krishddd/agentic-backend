@@ -1,0 +1,59 @@
+# CrewAI Framework
+crewai
+crewai-tools
+
+# LLM & AI
+openai
+langchain
+langchain-openai
+langchain-community
+
+# RAG & Vector Database
+chromadb
+sentence-transformers
+tiktoken
+
+# Data Processing
+pandas
+numpy
+python-dotenv
+pydantic
+pydantic-settings
+
+# Web & API Tools
+requests
+beautifulsoup4
+lxml
+httpx
+
+# Financial Data
+yfinance
+sec-api
+alpha-vantage
+
+# OpenBB Platform (optional — falls back to yfinance if not installed)
+# openbb>=4.0.0
+
+# Utilities
+python-dateutil
+pytz
+tenacity
+rich
+
+# Web Search
+duckduckgo-search
+google-search-results
+
+# Caching
+diskcache
+
+# Logging
+loguru
+
+# HTML/PDF Processing
+pypdf
+html2text
+
+# FastAPI & Server
+fastapi
+uvicorn[standard]

@@ -1,0 +1,9 @@
+google-api-python-client==2.111.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.0
+pandas==2.1.4
+openai==1.6.1
+ics==0.7.2
+python-dotenv==1.0.0
+schedule==1.2.1
+requests==2.31.0

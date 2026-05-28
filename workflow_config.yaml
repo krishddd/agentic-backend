@@ -1,0 +1,393 @@
+# =============================================================================
+# Workflow Configuration — 12 Specialized Pipelines
+# =============================================================================
+# Each workflow defines the step sequence, agents, tools, and quality gates.
+# The PromptRouter maps user intent to one of these workflows.
+# Workflows 1-8: Financial/Business | 9-12: Desktop/Browser/Document/Data
+
+workflows:
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 1. Pre-Investment Due Diligence (6 agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  due_diligence:
+    description: "Full pre-investment deep dive with quality loop"
+    input_type: "ticker"
+    steps:
+      - agent: research_analyst
+        module: crewai
+        tools: [WebSearch, NewsSearch]
+        output_key: research_output
+      - agent: financial_analyst
+        module: crewai
+        tools: [FinancialMetrics]
+        output_key: financial_data
+      - agent: sec_filing_parser
+        module: crewai
+        tools: [SECFilingSearch, SECFilingDownload]
+        output_key: sec_analysis
+      - agent: sentiment_analyst
+        module: crewai
+        tools: [SentimentAnalysis]
+        output_key: sentiment_data
+      - agent: investment_advisor
+        module: crewai
+        tools: []
+        output_key: investment_report
+        quality_loop:
+          enabled: true
+          max_iterations: 3
+          threshold: 7.0
+          min_sources: 6
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: email_report
+    final_actions:
+      - email_report
+      - update_sheet
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 2. Competitive Intelligence (4 agents, multi-ticker)
+  # ─────────────────────────────────────────────────────────────────────────
+  competitor_intel:
+    description: "Side-by-side company comparison"
+    input_type: "multi_ticker"
+    steps:
+      - agent: research_analyst
+        module: crewai
+        tools: [WebSearch, NewsSearch]
+        per_ticker: true
+        output_key: research_output
+      - agent: financial_analyst
+        module: crewai
+        tools: [FinancialMetrics]
+        per_ticker: true
+        output_key: financial_data
+      - agent: investment_advisor
+        module: crewai
+        tools: []
+        output_key: investment_report
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: email_report
+    final_actions:
+      - email_report
+      - update_sheet
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 3. Earnings & Filing Alert (4 agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  earnings_monitor:
+    description: "Latest earnings analysis with risk-based alert routing"
+    input_type: "ticker"
+    steps:
+      - agent: financial_analyst
+        module: crewai
+        tools: [FinancialMetrics]
+        output_key: financial_data
+      - agent: sec_filing_parser
+        module: crewai
+        tools: [SECFilingSearch, SECFilingDownload]
+        output_key: sec_analysis
+      - agent: analyst
+        module: marketing
+        services: [Sheets, Slack]
+        action: risk_scoring
+        output_key: deal_score
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Calendar]
+        action: alert_email
+    final_actions:
+      - alert_email
+      - update_sheet
+      - slack_alert_if_high_risk
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 4. Market Sentiment Scan (3 agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  market_pulse:
+    description: "Real-time news sentiment scan"
+    input_type: "ticker"
+    steps:
+      - agent: research_analyst
+        module: crewai
+        tools: [NewsSearch, WebSearch]
+        output_key: research_output
+      - agent: sentiment_analyst
+        module: crewai
+        tools: [SentimentAnalysis]
+        output_key: sentiment_data
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: email_report
+    final_actions:
+      - email_report
+      - update_sheet
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 5. Lead Generation + Outreach (3 agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  lead_gen:
+    description: "Generate synthetic leads, outreach, and scoring"
+    input_type: "num_leads"
+    steps:
+      - agent: data_generator
+        module: marketing
+        services: [DataGenerator, Sheets]
+        output_key: generated_leads
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: outreach_emails
+      - agent: analyst
+        module: marketing
+        services: [Sheets, Slack]
+        action: lead_scoring
+    final_actions:
+      - update_sheet
+      - slack_alert_high_value
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 6. Portfolio Review (5 agents, multi-ticker)
+  # ─────────────────────────────────────────────────────────────────────────
+  portfolio_review:
+    description: "Multi-stock portfolio analysis with rebalancing recs"
+    input_type: "multi_ticker"
+    steps:
+      - agent: financial_analyst
+        module: crewai
+        tools: [FinancialMetrics]
+        per_ticker: true
+        output_key: financial_data
+      - agent: research_analyst
+        module: crewai
+        tools: [WebSearch, NewsSearch]
+        per_ticker: true
+        output_key: research_output
+      - agent: sentiment_analyst
+        module: crewai
+        tools: [SentimentAnalysis]
+        output_key: sentiment_data
+      - agent: investment_advisor
+        module: crewai
+        tools: []
+        output_key: investment_report
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: email_report
+    final_actions:
+      - email_report
+      - update_sheet
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 7. Deal Pipeline Processing (3 agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  deal_pipeline:
+    description: "Process all pending sheet rows through email and scoring"
+    input_type: "none"
+    steps:
+      - agent: secretary
+        module: marketing
+        services: [Sheets, Gmail, RAG, Calendar]
+        action: process_pending_rows
+      - agent: analyst
+        module: marketing
+        services: [Sheets, Slack]
+        action: score_sent_rows
+      - agent: data_generator
+        module: marketing
+        services: [DataGenerator, Sheets]
+        action: refill_if_empty
+        condition: "pending_rows < 5"
+    final_actions:
+      - update_sheet
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 8. SEC Risk Factor Deep Scan (4 agents)
+  # ─────────────────────────────────────────────────────────────────────────
+  risk_scan:
+    description: "SEC 10-K risk extraction with severity matrix"
+    input_type: "ticker"
+    steps:
+      - agent: sec_filing_parser
+        module: crewai
+        tools: [SECFilingSearch, SECFilingDownload]
+        output_key: sec_analysis
+      - agent: research_analyst
+        module: crewai
+        tools: [WebSearch, NewsSearch]
+        output_key: research_output
+      - agent: investment_advisor
+        module: crewai
+        tools: []
+        output_key: investment_report
+      - agent: secretary
+        module: marketing
+        services: [Gmail]
+        action: alert_email
+    final_actions:
+      - alert_email
+
+  # =========================================================================
+  # NEW — Desktop Agent & Browser Workflows (9-12)
+  # =========================================================================
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 9. Browser Research (AI browser agent for live web research)
+  # ─────────────────────────────────────────────────────────────────────────
+  browser_research:
+    description: "AI browser agent for live web research, data extraction, and screenshots"
+    input_type: "task_description"
+    steps:
+      - agent: planner
+        module: langgraph
+        tools: [TaskDecomposer]
+        output_key: research_plan
+        description: "Break down the research task into sub-questions"
+      - agent: browser_agent
+        module: mcp
+        tools: [playwright_browser, browser_use_agent, tavily_web_search]
+        output_key: web_data
+        description: "Navigate websites, extract content, take screenshots"
+      - agent: analyst
+        module: langgraph
+        tools: [memory_knowledge_graph]
+        output_key: analysis
+        description: "Analyze extracted data, store findings in memory"
+      - agent: composer
+        module: langgraph
+        tools: []
+        output_key: report
+        description: "Generate research report from all findings"
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: email_report
+    final_actions:
+      - email_report
+      - update_sheet
+      - store_to_memory
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 10. Desktop Automation (file/code/system tasks)
+  # ─────────────────────────────────────────────────────────────────────────
+  desktop_automation:
+    description: "Execute desktop tasks via natural language — files, code, system, PDF"
+    input_type: "task_description"
+    steps:
+      - agent: planner
+        module: langgraph
+        tools: [TaskDecomposer]
+        output_key: task_plan
+        description: "Decompose user task into atomic desktop operations"
+      - agent: desktop_executor
+        module: mcp
+        tools: [desktop_agent]
+        output_key: execution_result
+        description: "Execute file ops, code, system commands, PDF operations"
+      - agent: verifier
+        module: mcp
+        tools: [desktop_agent]
+        output_key: verification
+        description: "Verify task completion via file checks and screenshots"
+    final_actions:
+      - log_execution
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 11. Document Pipeline (PDF/doc processing → report → email)
+  # ─────────────────────────────────────────────────────────────────────────
+  document_pipeline:
+    description: "Process documents: read PDFs, summarize, create reports, email results"
+    input_type: "task_description"
+    steps:
+      - agent: reader
+        module: mcp
+        tools: [desktop_agent]
+        output_key: raw_content
+        description: "Read/extract text from PDFs, documents, and files"
+      - agent: summarizer
+        module: langgraph
+        tools: [memory_knowledge_graph]
+        output_key: summary
+        description: "Summarize and analyze document content"
+      - agent: report_generator
+        module: mcp
+        tools: [desktop_agent]
+        output_key: report_path
+        description: "Generate formatted PDF report from analysis"
+      - agent: secretary
+        module: marketing
+        services: [Gmail]
+        action: email_report
+    final_actions:
+      - email_report
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 12. Data Analysis Pipeline (CSV/data → analysis → charts → report)
+  # ─────────────────────────────────────────────────────────────────────────
+  data_analysis:
+    description: "Analyze data files: CSV processing, statistics, chart generation"
+    input_type: "task_description"
+    steps:
+      - agent: data_loader
+        module: mcp
+        tools: [desktop_agent]
+        output_key: loaded_data
+        description: "Read CSV/Excel files, inspect structure"
+      - agent: analyst
+        module: mcp
+        tools: [desktop_agent]
+        output_key: analysis
+        description: "Run Python analysis: statistics, correlations, trends"
+      - agent: visualizer
+        module: mcp
+        tools: [desktop_agent]
+        output_key: charts
+        description: "Generate matplotlib/plotly charts and save to disk"
+      - agent: reporter
+        module: mcp
+        tools: [desktop_agent]
+        output_key: report_path
+        description: "Create PDF report with embedded analysis and charts"
+      - agent: secretary
+        module: marketing
+        services: [Gmail, Sheets]
+        action: email_report
+    final_actions:
+      - email_report
+      - update_sheet
+
+# =============================================================================
+# Quality Gate Defaults
+# =============================================================================
+quality_defaults:
+  threshold: 7.0
+  min_sources: 6
+  max_iterations: 3
+
+# =============================================================================
+# Default Emails
+# =============================================================================
+defaults:
+  sender_email: "krishnahutrik.n@gmail.com"
+  receiver_email: "harish.krishna@testaing.com"
+  spreadsheet_id: "1OkXq8gvcd4etHeTri1qCHFFWDLrxjhQO4H_8STscr2A"
+  sheet_name: "Management_demo"
+
+# =============================================================================
+# MiroFish ABM Simulation
+# =============================================================================
+mirofish:
+  enabled: true
+  default_budget_mode: "lite"      # lite | standard | deep
+  mc_paths:
+    lite: 5
+    standard: 3
+    deep: 5
+
+

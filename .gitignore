@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# Environments
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Logs and outputs
+*.log
+logs/
+outputs/
+
+# Data artifacts (regenerated at runtime)
+api_responses/
+traces/
+security_logs/
+evaluation_results/
+results/
+mindmaps/
+
+# ABM simulation artifacts
+simulations/
+*.db
+abm_ledger_*.db
+
+# Google OAuth tokens (sensitive) — match at any depth
+**/credentials.json
+**/token.json
+**/client_secret_*.json
+**/service-account*.json
+credentials.json
+token.json
+client_secret_*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Claude
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ChromaDB (regenerated)
+chroma_data/
+chroma_db/
+
+# Reports output (regenerated)
+reports/output/
+
+# Data/Cache (regenerated)
+data/cache/
+data/filings/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+*.png
+*.docx
+implementation_plan*.md
+desktop_agent/receipts/
