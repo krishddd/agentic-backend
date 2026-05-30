@@ -61,6 +61,7 @@ google-auth-oauthlib>=1.0.0
 
 # --- Phase 2: Research ---
 exa-py>=1.0.0                  # Exa AI neural search
+diskcache>=5.6.0               # On-disk cache used by cache.py
 
 # --- Phase 3: Desktop / Document ---
 # pytesseract>=0.3.10           # OCR via Tesseract
